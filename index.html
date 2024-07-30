@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #5a287d, #feb47b);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 10px 10px 0 0;
+        }
+        .tab.active {
+            background: white;
+            border-bottom: none;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        button {
+            padding: 10px 20px;
+            background: #5a287d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button-right {
+            padding: 10px 20px;
+            background: #5a287d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+			align:right
+        }
+        .full-page-button {
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+		 .full-page-top {
+		    background: #5a287d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 20px;
+
+        }
+.blink-text {
+    color: black; /* Initial text color */
+    font-weight: bold;
+    animation: blinkText 1s step-start infinite;
+  }
+
+  @keyframes blinkText {
+    50% {
+      color: #5a287d; /* Blinking text color */
+    }
+  }
+.subtext {
+    font-size: 0.75em; /* Adjust the size as needed */
+    color: #666; /* Optional: change the color to a lighter shade */
+    animation: blinkText 1s step-start infinite;
+  }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="full-page-top" >
+	Welcome Krishna !
+	</div>
+	<br/><br/><br/>
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'tab1')">Active Subscription</div>
+        <div class="tab" onclick="openTab(event, 'tab2')">Prime Benefit Consent</div>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+	
+		<h3> Active Plan</h3>
+        <form id="getForm">
+		  <table>
+                <tr>
+                    <td>1</td>
+                    <td>Monthy Subscription</td>
+                    <td>XXXX9090</td>
+                    <td>$100</td>
+                    <td>30-07-2024</td>
+                </tr>
+            </table>
+	
+	<div align="right">
+            <button type="button-right " onclick="handleGetRequest()" >Skip Subscription</button>
+     &nbsp;			 
+
+            <button type="button-right " onclick="handleGetRequest()" >Cancel Subscription</button>
+			 </div>
+        </form>
+		<br/>		
+         
+        <div id="myDiv" >Provide us with '<span class="blink-text">your Prime Benefit consent</span>' to enjoy '<span class="blink-text">Your</span>' Benefits !</div>
+        <br/>
+
+		<h3> Your Prime Benefit</h3>
+        <form id="getForm">
+            <table>
+                <tr>
+                    <td>1</td>
+                    <td>Upcomming Payment (Monthly)</td>
+                    <td>XXXX9090</td>
+                    <td>$50 <br><span class="subtext">50% Discount</span></td>
+                    <td>01-08-2024</td>
+                </tr>
+            </table>
+			 <div align="right">
+            <button type="button" onclick="handleGetRequest()">Enjoy Now</button>
+			 </div>
+        </form>
+		
+		<br/><br/>
+        <button class="full-page-button"></button>
+    </div>
+
+    <div id="tab2" class="tab-content" ">
+    <input type="checkbox" id="consent" class="consent-checkbox" required>
+    <label for="consent" class="consent-text">
+      I consent to allow to access my account information. 
+      For more details, please read our 
+      <a href="#" >Privacy Policy</a>.
+    </label>
+    <br/><br/>
+  <button type="submit">Submit</button>
+  </div>
+
+</div>
+
+<script>
+    function openTab(event, tabId) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabId).style.display = "block";
+        document.getElementById(tabId).classList.add("active");
+        event.currentTarget.classList.add("active");
+
+// Get Page token
+        if (tabId="tab2")
+		{
+                                    var YOUR_ACCESS_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJkZW1vLWFwcC05ZWUxMmQ5ZC0xZmRiLTRmY2UtYThlNi1mMWVkYzQ1ODM5MmYiLCJvcmciOiI5ZWUxMmQ5ZC0xZmRiLTRmY2UtYThlNi1mMWVkYzQ1ODM5MmYuZXhhbXBsZS5vcmciLCJpc3MiOiJodHRwczovL2FwaS5zYW5kYm94Lm5hdHdlc3QuY29tIiwidG9rZW5fdHlwZSI6IkFDQ0VTU19UT0tFTiIsImV4dGVybmFsX2NsaWVudF9pZCI6Im44dHd5MHJrWmVaU244LTRqZEhxTHRZMkQ1cVFjS1NCdmlHM1BGbVlTS2s9IiwiY2xpZW50X2lkIjoiN2QzZjg0ZTItMWFmMi00NmZkLTg1ZmEtNDUzNDk4MWExZjFlIiwibWF4X2FnZSI6ODY0MDAsImF1ZCI6IjdkM2Y4NGUyLTFhZjItNDZmZC04NWZhLTQ1MzQ5ODFhMWYxZSIsInVzZXJfaWQiOiIxMjM0NTY3ODkwMTJAOWVlMTJkOWQtMWZkYi00ZmNlLWE4ZTYtZjFlZGM0NTgzOTJmLmV4YW1wbGUub3JnIiwiZ3JhbnRfaWQiOiJmM2I5Y2U4My1hMjcxLTQ0YmYtYTY2Yy0xZmM5ZWMyMmYwMzkiLCJzY29wZSI6ImFjY291bnRzIG9wZW5pZCIsImNvbnNlbnRfcmVmZXJlbmNlIjoiMTEzYmQ4MDQtYmY2Zi00Y2QzLWJmYzktZWYyODNkZDNjMDQ2IiwiZXhwIjoxNzIyMzUyODQ0LCJpYXQiOjE3MjIzNTIyNDQsImp0aSI6IjNlYzE1MzVlLTljNDAtNGE2MS1hYTM1LTNiOTVmOTMzZTAyZCIsInRlbmFudCI6Ik5hdFdlc3QifQ.Rjroj740rcLwwuBBus8tSSGCotTRmW7r0yq5erVNGAVo-ICUNok0xPp-dvOpMQMo1fDuZbmukz9uea0ZU1TMf-HwnWfmZPHlE36u0gsV2Np7E_s_3wZrZDnmIhsLsyqInCaBLbzlwe2U7-jCTxpvHn-lnZxi1yCK0ewsmTodxbpI_vM2LAW5w6bOMMg8gdWGd3fli5eVODEE-48aogL4iP04voLfrMF3Cukht-CCfV1gD3TuOYvI0UanJTpXi2p_DLTn5t5bxZ8gw2rurc1DixPnM5-kIH8tEmgRe1p4mHYJ0gMmhGywsohHZPc68FwT8lZv3uup0-02iSbZCIm3_w';
+				getAccounts(YOUR_ACCESS_TOKEN).then(data => console.log(data)).catch(error => console.error(error));
+		}
+    }
+
+    function handleGetRequest() {
+        const formData = new FormData(document.getElementById('getForm'));
+        const queryString = new URLSearchParams(formData).toString();
+        fetch(`your-get-endpoint?${queryString}`, {
+            method: 'GET'
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+    }
+
+    function handlePostRequest() {
+        const formData = new FormData(document.getElementById('postForm'));
+        fetch('your-post-endpoint', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+    }
+
+   async function getAccounts(accessToken) {
+  const url = 'https://ob.sandbox.natwest.com/open-banking/v3.1/aisp/accounts';
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    mode: 'no-cors'
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+    throw error;
+  }
+}
+
+	
+    async function getToken() {
+
+        const url = 'https://ob.sandbox.natwest.com/token';
+        const clientId = 'n8twy0rkZeZSn8-4jdHqLtY2D5qQcKSBviG3PFmYSKk=';  // Replace with your actual client ID
+        const clientSecret = 'rkXCPEtePycAge73EYmZMxBb01n-HhkUC3EPUuOkFGk=';  // Replace with your actual client secret
+        const body = `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}&scope=accounts`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: body
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Access Token:', data.access_token);
+	// createAccountAccessConsent(data.access_token)
+                // You can now use the access token for subsequent API requests
+            } else {
+                console.error('Error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function createAccountAccessConsent(Accesstoken) {
+		const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const url = 'https://ob.sandbox.natwest.com/open-banking/v3.1/aisp/account-access-consents';
+        const accessToken = Accesstoken;  // Replace with your actual access token
+        const body = JSON.stringify({
+            "Data": {
+                "Permissions": [
+                    "ReadAccountsDetail",
+                    "ReadBalances",
+                    "ReadTransactionsCredits",
+                    "ReadTransactionsDebits",
+                    "ReadTransactionsDetail"
+                ]
+            },
+            "Risk": {}
+        });
+
+        try {
+
+            const response = await fetch( proxyUrl + url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            });
+
+		    console.log(response);
+			
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Account Access Consent Created:', data);
+                alert('Account Access Consent Created: ' + JSON.stringify(data));
+            } else {
+                console.error('Error:', response.statusText);
+                alert('Error: ' + response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: ' + error);
+        }
+    }
+</script>
+
+</body>
+</html>
