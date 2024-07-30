@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #5a287d, #feb47b);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 10px 10px 0 0;
+        }
+        .tab.active {
+            background: white;
+            border-bottom: none;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        button {
+            padding: 10px 20px;
+            background: #5a287d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button-right {
+            padding: 10px 20px;
+            background: #5a287d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+			align:right
+        }
+        .full-page-button {
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+		 .full-page-top {
+		    background: #5a287d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 20px;
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="full-page-top" >
+	Welcome Krishna !
+	</div>
+	<br/><br/><br/>
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'tab1')">Active Subscription</div>
+        <div class="tab" onclick="openTab(event, 'tab2')">Prime Benefit Consent</div>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+	
+		<h3> Active Subscription </h3>
+        <form id="getForm">
+		  <table>
+                <tr>
+                    <td>1</td>
+                    <td>Monthy Subscription</td>
+                    <td>XXXX9090</td>
+                    <td>$100</td>
+                    <td>30-07-2024</td>
+                </tr>
+            </table>
+			<div align="right">
+            <button type="button-right " onclick="handleGetRequest()" >Cancel Subscription</button>
+			 </div>
+        </form>
+		<br/>		
+		
+		<h3> Prime Benefit</h3>
+        <form id="getForm">
+            <table>
+                <tr>
+                    <td>Row 1, Col 1</td>
+                    <td>Row 1, Col 2</td>
+                    <td>Row 1, Col 3</td>
+                    <td>Row 1, Col 4</td>
+                    <td>Row 1, Col 5</td>
+                </tr>
+            </table>
+			 <div align="right">
+            <button type="button" onclick="handleGetRequest()">Skip Subscription</button>
+			 </div>
+        </form>
+		
+		<br/><br/>
+        <button class="full-page-button">Full Page Button</button>
+    </div>
+
+    <div id="tab2" class="tab-content" ">
+        <form id="postForm">
+            <table>
+                <tr>
+                    <td>Row 1, Col 1</td>
+                    <td>Row 1, Col 2</td>
+                    <td>Row 1, Col 3</td>
+                    <td>Row 1, Col 4</td>
+                    <td>Row 1, Col 5</td>
+                </tr>
+            </table>
+            <button type="button" onclick="handlePostRequest()">POST Request</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openTab(event, tabId) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabId).style.display = "block";
+        document.getElementById(tabId).classList.add("active");
+        event.currentTarget.classList.add("active");
+
+// Get Page token
+        if (tabId="tab2")
+		{
+				getToken();
+		}
+    }
+
+    function handleGetRequest() {
+        const formData = new FormData(document.getElementById('getForm'));
+        const queryString = new URLSearchParams(formData).toString();
+        fetch(`your-get-endpoint?${queryString}`, {
+            method: 'GET'
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+    }
+
+    function handlePostRequest() {
+        const formData = new FormData(document.getElementById('postForm'));
+        fetch('your-post-endpoint', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+    }
+	
+	async function getToken() {
+
+        const url = 'https://ob.sandbox.natwest.com/token';
+        const clientId = 'n8twy0rkZeZSn8-4jdHqLtY2D5qQcKSBviG3PFmYSKk=';  // Replace with your actual client ID
+        const clientSecret = 'rkXCPEtePycAge73EYmZMxBb01n-HhkUC3EPUuOkFGk=';  // Replace with your actual client secret
+        const body = `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}&scope=accounts`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: body
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Access Token:', data.access_token);
+				createAccountAccessConsent(data.access_token)
+                // You can now use the access token for subsequent API requests
+            } else {
+                console.error('Error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function createAccountAccessConsent(Accesstoken) {
+		const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const url = 'https://ob.sandbox.natwest.com/open-banking/v3.1/aisp/account-access-consents';
+        const accessToken = Accesstoken;  // Replace with your actual access token
+        const body = JSON.stringify({
+            "Data": {
+                "Permissions": [
+                    "ReadAccountsDetail",
+                    "ReadBalances",
+                    "ReadTransactionsCredits",
+                    "ReadTransactionsDebits",
+                    "ReadTransactionsDetail"
+                ]
+            },
+            "Risk": {}
+        });
+
+        try {
+
+            const response = await fetch( proxyUrl + url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            });
+
+		    console.log(response);
+			
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Account Access Consent Created:', data);
+                alert('Account Access Consent Created: ' + JSON.stringify(data));
+            } else {
+                console.error('Error:', response.statusText);
+                alert('Error: ' + response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: ' + error);
+        }
+    }
+</script>
+
+</body>
+</html>
